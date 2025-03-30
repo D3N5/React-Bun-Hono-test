@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import "./App.css";
 
@@ -31,6 +31,15 @@ const CardContent = styled("div")({
 
 function App() {
   const [totalSpent, setTotalSpent] = useState(0);
+
+  useEffect(() => {
+    async function fetchTotal() {
+      const res = await fetch("api/expenses/total-spent");
+      const data = await res.json();
+      setTotalSpent(data.total);
+    }
+    fetchTotal();
+  }, []);
 
   return (
     <Card>
